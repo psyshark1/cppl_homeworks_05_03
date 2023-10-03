@@ -10,7 +10,7 @@ public:
 	int operator()(const std::vector<int>& v)
 	{
 		count = 0;
-		for (auto it : v)
+		for (const auto& it : v)
 		{
 			if ((it % 3) != 1)
 			{
@@ -30,7 +30,7 @@ function_get_count::~function_get_count()
 int sum(const std::vector<int>& v)
 {
 	int sum = 0;
-	for (auto it : v)
+	for (const auto& it : v)
 	{
 		if ((it % 3) != 1)
 		{
@@ -42,7 +42,7 @@ int sum(const std::vector<int>& v)
 
 std::ostream& operator << (std::ostream& l, std::vector<int>& r)
 {
-	for (auto it : r)
+	for (const auto& it : r)
 	{
 		l << it << ' ';
 	}
