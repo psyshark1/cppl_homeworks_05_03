@@ -1,43 +1,40 @@
 ﻿#include <iostream>
 #include <vector>
 #include <functional>
+#include <algorithm>
 
 class function_get_count
 {
 public:
 	function_get_count() = default;
 	~function_get_count();
-	int operator()(const std::vector<int>& v)
+	int get_count();
+	int get_sum();
+	void operator()(const int& v)
 	{
-		count = 0;
-		for (const auto& it : v)
+		if ((v % 3) != 1)
 		{
-			if ((it % 3) != 1)
-			{
-				++count;
-			}
+			++count;
+			sum += v;
 		}
-		return count;
 	}
 private:
 	int count{ 0 };
+	int sum{ 0 };
 };
+
+int function_get_count::get_count()
+{
+	return count;
+}
+
+int function_get_count::get_sum()
+{
+	return sum;
+}
 
 function_get_count::~function_get_count()
 {
-}
-
-int sum(const std::vector<int>& v)
-{
-	int sum = 0;
-	for (const auto& it : v)
-	{
-		if ((it % 3) != 1)
-		{
-			sum += it;
-		}
-	}
-	return sum;
 }
 
 std::ostream& operator << (std::ostream& l, std::vector<int>& r)
@@ -53,10 +50,11 @@ std::ostream& operator << (std::ostream& l, std::vector<int>& r)
 int main()
 {
 	std::vector<int> v{ 4, 1, 3, 6, 25, 54 };
-	std::function<int(const std::vector<int>&)> get_sum{ sum };
 	function_get_count get_count;
 	std::cout << "[IN]: " << v << std::endl;
-	std::cout << "[OUT]: get_sum() = " << get_sum(v) <<std::endl;
-	std::cout << "[OUT]: get_count() = " << get_count(v) << std::endl;
+	get_count = std::for_each(v.begin(), v.end(), get_count);
+	
+	std::cout << "[OUT]: get_sum() = " << get_count.get_sum() <<std::endl;
+	std::cout << "[OUT]: get_count() = " << get_count.get_count() << std::endl;
 	return 0;
 }
